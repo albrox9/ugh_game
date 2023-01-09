@@ -7,13 +7,13 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:juego/overlays/hud.dart';
 import 'package:juego/players/ember_player.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flame_forge2d/flame_forge2d.dart';
 import '../element/star_element.dart';
 import '../players/water_player.dart';
+import '../ux/joypad.dart';
 
-class UghGame extends FlameGame with HasKeyboardHandlerComponents, HasCollisionDetection {
+class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisionDetection {
 
-  UghGame();
 
   late TiledComponent tiledComponent;
   int verticalDirection = 0;
@@ -29,6 +29,8 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents, HasCollisionD
   late EmberPlayer _emberPlayer;
 
   List <PositionComponent> objetosVisuales = [];
+
+  UghGame():super(gravity: Vector2(0, 9.8), zoom: 1);
 
   //Funcion que carga todos los recursos del juego.
   //Es futuro y puede ser asíncrono.
@@ -92,7 +94,7 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents, HasCollisionD
     //limpio el array de los objetos visuales viejos.
     objetosVisuales.clear();
     //posicionamos el mapa de nuevo.
-    tiledComponent.position -= Vector2(0,0);
+    tiledComponent.position = Vector2(0,0);
 
     ObjectGroup? stars = tiledComponent.tileMap.getLayer<ObjectGroup>("stars");
     ObjectGroup? water = tiledComponent.tileMap.getLayer<ObjectGroup>("water");
@@ -125,6 +127,33 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents, HasCollisionD
     starsCollected = 0;
     health = 3;
     initializeGame(false);
+  }
+
+  void joypadMoved(Direction direction){
+
+    horizontalDirection = 0;
+    verticalDirection=0;
+
+    print("JOYPAD EN MOVIMIENTO: ----->" + direction.toString());
+
+    horizontalDirection += (direction == Direction.left)
+        ? -1
+        : 0;
+    horizontalDirection += (direction == Direction.right)
+        ? 1
+        : 0;
+
+    //posicion vertical
+    verticalDirection += (direction == Direction.up)
+        ? -1
+        : 0;
+    verticalDirection += (direction == Direction.down)
+        ? 1
+        : 0;
+
+    //pinta hacia donde va el muñeco. LE hace que cambie de dirección
+    _emberPlayer.horizontalDirection = horizontalDirection;
+
   }
 
 }
