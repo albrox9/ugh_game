@@ -34,7 +34,8 @@ class EmberBody extends BodyComponent<UghGame>{
     // TODO: implement onLoad
     await super.onLoad();
     //pongo la posicion a 0, para que no se solape con la del emberplayer.
-    emberPlayer = EmberPlayer(position: Vector2.zero());
+    //emberPlayer = EmberPlayer(position: Vector2.zero());
+    //emberPlayer.size = size;
     //add(emberPlayer);
     renderBody = true;
   }
@@ -49,10 +50,11 @@ class EmberBody extends BodyComponent<UghGame>{
     final shape = PolygonShape();
     final vertices = [
       Vector2(0,0),
-      Vector2(size.x + 0.6, 0),
-      Vector2(emberPlayer.size.x + 0.6, size.y + 0.9),
-      Vector2(0, size.y + 0.9),
+      Vector2(32, 0),
+      Vector2(32, 32),
+      Vector2(0, 32),
     ];
+    shape.set(vertices);
 
     //en el cuerpo se crea una forma interna.
     FixtureDef fixtureDef = FixtureDef(CircleShape());
@@ -66,7 +68,7 @@ class EmberPlayer extends SpriteAnimationComponent with HasGameRef<UghGame>, Key
   EmberPlayer({
     required super.position,
     //Posicion redimensionada a 32. Original : 64. Necesidad de redimensionar mapa.
-  }) : super(size: Vector2.all(32), anchor: Anchor.center);
+  }) : super(anchor: Anchor.center);
 
   int horizontalDirection = 0;
   int verticalDirection = 0;
@@ -93,10 +95,12 @@ class EmberPlayer extends SpriteAnimationComponent with HasGameRef<UghGame>, Key
     );
 
     //cargamos el cuerpo del personaje. Ciruclo por su forma circular.
-    add(
-      //podriamos guardarlo como variable.
+    /*add(
+      //podriamos guardarlo como variable. Antiguo cuerpo, ahora esta el BOdy,
       CircleHitbox(),
-    );
+    );*/
+
+    add(EmberBody(position: Vector2.zero()));
   }
 
   //deteccion de las teclas del teclado y movimiento
