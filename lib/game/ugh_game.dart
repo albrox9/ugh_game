@@ -26,7 +26,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
   int starsCollected = 0;
   int health = 3;
 
-  late EmberPlayer _emberPlayer;
+  late EmberBody _emberBody;
 
   List <PositionComponent> objetosVisuales = [];
 
@@ -115,8 +115,8 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
       add(starElement);
     }
 
-    _emberPlayer = EmberPlayer(position: Vector2(posinitplayer!.objects.first.x, posinitplayer!.objects.first.y));
-    add(_emberPlayer);
+    _emberBody = EmberBody(position: Vector2(posinitplayer!.objects.first.x, posinitplayer!.objects.first.y));
+    add(_emberBody);
 
     if (loadHud) {
       add(Hud());
@@ -152,7 +152,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
         : 0;
 
     //pinta hacia donde va el muñeco. LE hace que cambie de dirección
-    _emberPlayer.horizontalDirection = horizontalDirection;
+    _emberBody.emberPlayer.horizontalDirection = horizontalDirection;
 
   }
 

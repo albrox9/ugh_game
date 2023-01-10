@@ -1,8 +1,11 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame_forge2d/body_component.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:forge2d/src/dynamics/body.dart';
 import 'package:juego/players/water_player.dart';
 
 import '../element/star_element.dart';
@@ -13,6 +16,33 @@ import '../game/ugh_game.dart';
 //Esto crea como una animación del objeto.
 //La variable animación carga el Sprite desde cache, y le dirá las caracteristicas de la animacion
 
+//Clase intermedia. Engloba al ember SAC.
+class EmberBody extends BodyComponent<UghGame>{
+
+  //no es un elemento que tiee posicion. Creamos la variable.
+  Vector2 position;
+  late EmberPlayer emberPlayer;
+
+  //constructor con parametro de position.
+  EmberBody({required this.position});
+
+  @override
+  Future<void> onLoad() async{
+    // TODO: implement onLoad
+    await super.onLoad();
+    emberPlayer = EmberPlayer(position: position);
+    add(emberPlayer);
+  }
+
+  @override
+  Body createBody() {
+    // TODO: implement createBody
+    BodyDef difinicionCuerpo = BodyDef(position: position, type: BodyType.dynamic);
+    Body cuerpo = world.createBody(difinicionCuerpo);
+    return cuerpo;
+  }
+
+}
 class EmberPlayer extends SpriteAnimationComponent with HasGameRef<UghGame>, KeyboardHandler, CollisionCallbacks {
 
   EmberPlayer({
