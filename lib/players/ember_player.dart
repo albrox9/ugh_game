@@ -21,6 +21,9 @@ class EmberBody extends BodyComponent<UghGame>{
 
   //no es un elemento que tiee posicion. Creamos la variable.
   Vector2 position;
+  //defino tamaño del body.
+  Vector2 size = Vector2(32,32);
+
   late EmberPlayer emberPlayer;
 
   //constructor con parametro de position.
@@ -30,8 +33,10 @@ class EmberBody extends BodyComponent<UghGame>{
   Future<void> onLoad() async{
     // TODO: implement onLoad
     await super.onLoad();
-    emberPlayer = EmberPlayer(position: position);
-    add(emberPlayer);
+    //pongo la posicion a 0, para que no se solape con la del emberplayer.
+    emberPlayer = EmberPlayer(position: Vector2.zero());
+    //add(emberPlayer);
+    renderBody = true;
   }
 
   @override
@@ -39,6 +44,19 @@ class EmberBody extends BodyComponent<UghGame>{
     // TODO: implement createBody
     BodyDef difinicionCuerpo = BodyDef(position: position, type: BodyType.dynamic);
     Body cuerpo = world.createBody(difinicionCuerpo);
+
+    //Ahora el poligono, a ver si funciona
+    final shape = PolygonShape();
+    final vertices = [
+      Vector2(0,0),
+      Vector2(size.x + 0.6, 0),
+      Vector2(emberPlayer.size.x + 0.6, size.y + 0.9),
+      Vector2(0, size.y + 0.9),
+    ];
+
+    //en el cuerpo se crea una forma interna.
+    FixtureDef fixtureDef = FixtureDef(CircleShape());
+    cuerpo.createFixture(fixtureDef);
     return cuerpo;
   }
 
