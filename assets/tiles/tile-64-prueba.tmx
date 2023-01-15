@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- He tenido que redimensionar el mapa, a 32 porque no cabia en la pantalla
-El tamaño original de los tiles es de 64x64. Algunas coordenadas no cuadran bien-->
-<map version="1.5" tiledversion="2021.03.23" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="28">
+<map version="1.5" tiledversion="2021.03.23" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="39">
  <tileset firstgid="1" source="Platform-Tiles64.tsx"/>
- <layer id="1" name="Capa de patrones 1" width="40" height="20">
+ <layer id="1" name="Capa de patrones 1" width="40" height="20" offsetx="4" offsety="-2">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,27,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -27,6 +25,22 @@ El tamaño original de los tiles es de 64x64. Algunas coordenadas no cuadran bie
 26,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12
 </data>
  </layer>
+ <group id="14" name="objStatic">
+  <objectgroup id="15" name="plataformas">
+   <object id="28" x="6" y="582">
+    <polygon points="0,0 92,-102 152,-102 206,-44 278,-40 284,-230 468,-230 470,-74 616,-74 952,-420 1014,-420 1012,-108 1300,-106 1302,50 -4,56"/>
+   </object>
+   <object id="36" x="606" y="66">
+    <polygon points="0,0 0,58 188,58 190,2"/>
+   </object>
+   <object id="37" x="962.667" y="34.6667">
+    <polygon points="0,0 60,0 58.6667,124 -2.66667,124"/>
+   </object>
+   <object id="38" x="1120" y="290.667">
+    <polygon points="0,0 0,26.6667 157.333,26.6667 157.333,-2.66667"/>
+   </object>
+  </objectgroup>
+ </group>
  <group id="9" name="objreem">
   <objectgroup id="12" name="posinitplayer">
    <object id="27" x="22" y="516">

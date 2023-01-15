@@ -22,7 +22,7 @@ class EmberBody extends BodyComponent<UghGame>{
   //no es un elemento que tiee posicion. Creamos la variable.
   Vector2 position;
   //defino tamaño del body.
-  Vector2 size = Vector2(32,32);
+  //Vector2 size = Vector2(32,32);
 
   late EmberPlayer emberPlayer;
 
@@ -34,9 +34,9 @@ class EmberBody extends BodyComponent<UghGame>{
     // TODO: implement onLoad
     await super.onLoad();
     //pongo la posicion a 0, para que no se solape con la del emberplayer.
-    //emberPlayer = EmberPlayer(position: Vector2.zero());
+    emberPlayer = EmberPlayer(position: Vector2.zero(), size: Vector2(32, 32));
     //emberPlayer.size = size;
-    //add(emberPlayer);
+    add(emberPlayer); //cuando activo esto, el juego no se inicia.
     renderBody = true;
   }
 
@@ -47,26 +47,28 @@ class EmberBody extends BodyComponent<UghGame>{
     Body cuerpo = world.createBody(difinicionCuerpo);
 
     //Ahora el poligono, a ver si funciona
-    final shape = PolygonShape();
-    final vertices = [
+    final shape = CircleShape();
+    /*final vertices = [
       Vector2(0,0),
       Vector2(32, 0),
       Vector2(32, 32),
       Vector2(0, 32),
     ];
-    shape.set(vertices);
+    shape.set(vertices);*/
+    shape.radius = 16.0;
 
     //en el cuerpo se crea una forma interna.
-    FixtureDef fixtureDef = FixtureDef(CircleShape());
+    FixtureDef fixtureDef = FixtureDef(shape);
     cuerpo.createFixture(fixtureDef);
     return cuerpo;
   }
 
 }
+
 class EmberPlayer extends SpriteAnimationComponent with HasGameRef<UghGame>, KeyboardHandler, CollisionCallbacks {
 
   EmberPlayer({
-    required super.position,
+    required super.position, super.size
     //Posicion redimensionada a 32. Original : 64. Necesidad de redimensionar mapa.
   }) : super(anchor: Anchor.center);
 
@@ -77,8 +79,6 @@ class EmberPlayer extends SpriteAnimationComponent with HasGameRef<UghGame>, Key
   final double moveSpeed = 200;
 
   bool hitByEnemy = false;
-
-
 
   @override
   Future<void> onLoad() async {
@@ -99,8 +99,6 @@ class EmberPlayer extends SpriteAnimationComponent with HasGameRef<UghGame>, Key
       //podriamos guardarlo como variable. Antiguo cuerpo, ahora esta el BOdy,
       CircleHitbox(),
     );*/
-
-    add(EmberBody(position: Vector2.zero()));
   }
 
   //deteccion de las teclas del teclado y movimiento

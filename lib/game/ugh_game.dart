@@ -2,8 +2,10 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:juego/bodies/suelo_body.dart';
 import 'package:juego/overlays/hud.dart';
 import 'package:juego/players/ember_player.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +28,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
   int starsCollected = 0;
   int health = 3;
 
-  late EmberPlayer _emberPlayer;
+  late EmberBody _emberBody;
 
   List <PositionComponent> objetosVisuales = [];
 
@@ -99,7 +101,12 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
     ObjectGroup? stars = tiledComponent.tileMap.getLayer<ObjectGroup>("stars");
     ObjectGroup? water = tiledComponent.tileMap.getLayer<ObjectGroup>("water");
     ObjectGroup? posinitplayer = tiledComponent.tileMap.getLayer<ObjectGroup>("posinitplayer");
+    ObjectGroup? plataformas = tiledComponent.tileMap.getLayer<ObjectGroup>("plataformas");
 
+    //añadimos los suelos
+   for (final plataformas in plataformas!.objects) {
+      add(SueloBody(tiledObject: plataformas));
+    }
 
     //añadimos los componenetes water al array y al juego.
     for (final water in water!.objects) {
@@ -115,8 +122,8 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
       add(starElement);
     }
 
-    _emberPlayer = EmberPlayer(position: Vector2(posinitplayer!.objects.first.x, posinitplayer!.objects.first.y));
-    add(_emberPlayer);
+    _emberBody = EmberBody(position: Vector2(posinitplayer!.objects.first.x,posinitplayer!.objects.first.y));
+    add(_emberBody);
 
     if (loadHud) {
       add(Hud());
@@ -152,7 +159,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
         : 0;
 
     //pinta hacia donde va el muñeco. LE hace que cambie de dirección
-    _emberPlayer.horizontalDirection = horizontalDirection;
+    _emberBody.emberPlayer.horizontalDirection=horizontalDirection;
 
   }
 

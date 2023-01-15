@@ -4,7 +4,6 @@ import 'package:juego/game/ugh_game.dart';
 class MainMenu extends StatelessWidget {
   // Reference to parent game.
   final UghGame game;
-
   const MainMenu({super.key, required this.game});
 
   @override
