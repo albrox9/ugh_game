@@ -54,7 +54,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
     //initializeGame(true);
 
     //Posicion redimensionada a 32. Original : 64. Necesidad de redimensionar mapa. No cabia en pantalla.
-    tiledComponent = await TiledComponent.load('tile-64-prueba.tmx', Vector2.all(32));
+    tiledComponent = await TiledComponent.load('tile-32.tmx', Vector2.all(32));
     add(tiledComponent);
 
 
@@ -100,7 +100,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
     //posicionamos el mapa de nuevo.
     tiledComponent.position = Vector2(0,0);
 
-    ObjectGroup? stars = tiledComponent.tileMap.getLayer<ObjectGroup>("stars");
+    //ObjectGroup? stars = tiledComponent.tileMap.getLayer<ObjectGroup>("stars");
     ObjectGroup? coin = tiledComponent.tileMap.getLayer<ObjectGroup>("coin");
     ObjectGroup? water = tiledComponent.tileMap.getLayer<ObjectGroup>("water");
     ObjectGroup? posinitplayer = tiledComponent.tileMap.getLayer<ObjectGroup>("posinitplayer");
