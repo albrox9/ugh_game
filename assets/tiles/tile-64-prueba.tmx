@@ -47,7 +47,7 @@
     <point/>
    </object>
   </objectgroup>
-  <objectgroup id="11" name="stars">
+  <objectgroup id="11" name="coin">
    <object id="21" x="720" y="382">
     <point/>
    </object>

@@ -11,6 +11,7 @@ import 'package:juego/players/ember_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import '../element/star_element.dart';
+import '../players/coin_animation.dart';
 import '../players/water_player.dart';
 import '../ux/joypad.dart';
 
@@ -43,6 +44,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
       'block.png',
       'ember.png',
       'ground.png',
+      'coin.png',
       'heart_half.png',
       'heart.png',
       'star.png',
@@ -99,6 +101,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
     tiledComponent.position = Vector2(0,0);
 
     ObjectGroup? stars = tiledComponent.tileMap.getLayer<ObjectGroup>("stars");
+    ObjectGroup? coin = tiledComponent.tileMap.getLayer<ObjectGroup>("coin");
     ObjectGroup? water = tiledComponent.tileMap.getLayer<ObjectGroup>("water");
     ObjectGroup? posinitplayer = tiledComponent.tileMap.getLayer<ObjectGroup>("posinitplayer");
     ObjectGroup? plataformas = tiledComponent.tileMap.getLayer<ObjectGroup>("plataformas");
@@ -116,11 +119,19 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
     }
 
     //añado los componenete estrella al array y al juego.
-    for (final stars in stars!.objects) {
+    /*for (final stars in stars!.objects) {
       StarElement starElement = StarElement(position: Vector2(stars.x, stars.y));
       objetosVisuales.add(starElement);
       add(starElement);
+    }*/
+
+    //añado monedas.
+    for (final coin in coin!.objects) {
+      CoinAnimation coinPlayer = CoinAnimation(position: Vector2(coin.x, coin.y));
+      objetosVisuales.add(coinPlayer);
+      add(coinPlayer);
     }
+
 
     _emberBody = EmberBody(position: Vector2(posinitplayer!.objects.first.x,posinitplayer!.objects.first.y));
     add(_emberBody);
