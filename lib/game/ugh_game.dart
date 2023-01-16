@@ -4,13 +4,14 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
+import 'package:flame/sprite.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:juego/bodies/suelo_body.dart';
 import 'package:juego/overlays/hud.dart';
 import 'package:juego/players/ember_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import '../element/star_element.dart';
+import 'package:flame/parallax.dart';
 import '../players/coin_animation.dart';
 import '../players/water_player.dart';
 import '../ux/joypad.dart';
@@ -48,14 +49,39 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
       'heart_half.png',
       'heart.png',
       'star.png',
+      'fondo.png',
       'water_enemy.png',
+
     ]);
 
-    //initializeGame(true);
+
+    /*ParallaxComponent background = await ParallaxComponent.load([
+      ParallaxImageData('clouds.png'),
+      ParallaxImageData('mountain_depth_z_1.png'),
+      ParallaxImageData('mountain_depth_z_2.png'),
+    ],
+
+        baseVelocity: Vector2(20, 0),
+        velocityMultiplierDelta: Vector2(1.8, 1.0),
+
+    );
+
+    add(background);*/
+
+
+    SpriteComponent image = SpriteComponent()
+    ..sprite = await loadSprite('fondo.png')
+    ..size = size;
+
+    add(image);
 
     //Posicion redimensionada a 32. Original : 64. Necesidad de redimensionar mapa. No cabia en pantalla.
     tiledComponent = await TiledComponent.load('tile-32.tmx', Vector2.all(32));
     add(tiledComponent);
+
+    //initializeGame(true);
+
+
 
 
   }
