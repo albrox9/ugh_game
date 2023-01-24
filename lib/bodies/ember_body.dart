@@ -8,8 +8,9 @@ import 'package:flutter/services.dart';
 
 import '../game/ugh_game.dart';
 import '../players/ember_player.dart';
+import 'coin_body.dart';
 
-class EmberBody extends BodyComponent<UghGame> with KeyboardHandler{
+class EmberBody extends BodyComponent<UghGame> with KeyboardHandler, ContactCallbacks{
 
   //no es un elemento que tiee posicion. Creamos la variable.
   Vector2 position;
@@ -73,24 +74,28 @@ class EmberBody extends BodyComponent<UghGame> with KeyboardHandler{
   @override
   Body createBody() {
     // TODO: implement createBody
-    BodyDef difinicionCuerpo = BodyDef(position: position, type: BodyType.dynamic);
+    BodyDef difinicionCuerpo = BodyDef(
+        userData: this,
+        position: position,
+        type: BodyType.dynamic);
     Body cuerpo = world.createBody(difinicionCuerpo);
 
     //Ahora el poligono, a ver si funciona
     final shape = CircleShape();
-    /*final vertices = [
-      Vector2(0,0),
-      Vector2(32, 0),
-      Vector2(32, 32),
-      Vector2(0, 32),
-    ];
-    shape.set(vertices);*/
     shape.radius = 16.0;
 
     //en el cuerpo se crea una forma interna.
     FixtureDef fixtureDef = FixtureDef(shape);
     cuerpo.createFixture(fixtureDef);
     return cuerpo;
+  }
+
+  //colisiones
+  @override
+  void beginContact(Object other, Contact contact) {
+    if ( other is CoinBody) {
+      other.removeFromParent();
+    }
   }
 
   @override

@@ -6,6 +6,7 @@ import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame/sprite.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:juego/bodies/coin_body.dart';
 import 'package:juego/bodies/suelo_body.dart';
 import 'package:juego/overlays/hud.dart';
 import 'package:juego/players/ember_player.dart';
@@ -17,7 +18,7 @@ import '../players/coin_animation.dart';
 import '../players/water_player.dart';
 import '../ux/joypad.dart';
 
-class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisionDetection {
+class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, ContactCallbacks {
 
 
   late TiledComponent tiledComponent;
@@ -32,6 +33,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
   int health = 3;
 
   late EmberBody _emberBody;
+  late CoinBody _coinBody;
 
   List <PositionComponent> objetosVisuales = [];
 
@@ -72,7 +74,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
 
     SpriteComponent image = SpriteComponent()
     ..sprite = await loadSprite('fondo.png')
-    ..size = worldToScreen(Vector2(, canvasSize.y));
+    ..size = worldToScreen(Vector2(canvasSize.x, canvasSize.y));
 
 
 
@@ -156,14 +158,16 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
 
     //añado monedas.
     for (final coin in coin!.objects) {
-      CoinAnimation coinPlayer = CoinAnimation(position: Vector2(coin.x, coin.y));
-      objetosVisuales.add(coinPlayer);
-      add(coinPlayer);
+      _coinBody = CoinBody(position: Vector2(coin.x, coin.y));
+      //objetosVisuales.add(coinBody);
+      add(_coinBody);
     }
 
 
     _emberBody = EmberBody(position: Vector2(posinitplayer!.objects.first.x,posinitplayer!.objects.first.y));
     add(_emberBody);
+
+
 
     if (loadHud) {
       add(Hud());

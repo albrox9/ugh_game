@@ -25,10 +25,6 @@ class CoinAnimation extends SpriteAnimationComponent with HasGameRef<UghGame> {
       ),
     );
 
-    //le agrego un cuerpo a water
-    add(CircleHitbox()
-      ..collisionType = CollisionType.passive);
-
 
     @override
     void update(double dt) {
