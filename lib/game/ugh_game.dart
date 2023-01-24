@@ -12,6 +12,7 @@ import 'package:juego/players/ember_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame/parallax.dart';
+import '../bodies/ember_body.dart';
 import '../players/coin_animation.dart';
 import '../players/water_player.dart';
 import '../ux/joypad.dart';
@@ -71,7 +72,9 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
 
     SpriteComponent image = SpriteComponent()
     ..sprite = await loadSprite('fondo.png')
-    ..size = size;
+    ..size = worldToScreen(Vector2(, canvasSize.y));
+
+
 
     add(image);
 
@@ -95,14 +98,14 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
   void update(double dt) {
 
     //position.add(Vector2(10.0 * horizontalDirection, 10.0 * verticalDirection));
-    velocity.x = horizontalDirection * moveSpeed;
-    velocity.y = verticalDirection * moveSpeed;
-    tiledComponent.position -= velocity * dt;
+    //velocity.x = horizontalDirection * moveSpeed;
+    //velocity.y = verticalDirection * moveSpeed;
+    //tiledComponent.position -= velocity * dt;
 
     //recorre la lista de objetos visuales
-    for(final objVisual in objetosVisuales ){
-      objVisual.position -= velocity * dt;
-    }
+    //for(final objVisual in objetosVisuales ){
+      //objVisual.position -= velocity * dt;
+    //}
 
     if (health <= 0) {
       overlays.add('GameOver');
@@ -196,7 +199,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
         : 0;
 
     //pinta hacia donde va el muñeco. LE hace que cambie de dirección
-    _emberBody.emberPlayer.horizontalDirection=horizontalDirection;
+    _emberBody.horizontalDirection=horizontalDirection;
 
   }
 

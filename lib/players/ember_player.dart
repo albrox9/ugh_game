@@ -17,53 +17,6 @@ import '../game/ugh_game.dart';
 //La variable animación carga el Sprite desde cache, y le dirá las caracteristicas de la animacion
 
 //Clase intermedia. Engloba al ember SAC.
-class EmberBody extends BodyComponent<UghGame>{
-
-  //no es un elemento que tiee posicion. Creamos la variable.
-  Vector2 position;
-  //defino tamaño del body.
-  //Vector2 size = Vector2(32,32);
-
-  late EmberPlayer emberPlayer;
-
-  //constructor con parametro de position.
-  EmberBody({required this.position});
-
-  @override
-  Future<void> onLoad() async{
-    // TODO: implement onLoad
-    await super.onLoad();
-    //pongo la posicion a 0, para que no se solape con la del emberplayer.
-    emberPlayer = EmberPlayer(position: Vector2.zero(), size: Vector2(32, 32));
-    //emberPlayer.size = size;
-    add(emberPlayer); //cuando activo esto, el juego no se inicia.
-    renderBody = true;
-  }
-
-  @override
-  Body createBody() {
-    // TODO: implement createBody
-    BodyDef difinicionCuerpo = BodyDef(position: position, type: BodyType.dynamic);
-    Body cuerpo = world.createBody(difinicionCuerpo);
-
-    //Ahora el poligono, a ver si funciona
-    final shape = CircleShape();
-    /*final vertices = [
-      Vector2(0,0),
-      Vector2(32, 0),
-      Vector2(32, 32),
-      Vector2(0, 32),
-    ];
-    shape.set(vertices);*/
-    shape.radius = 16.0;
-
-    //en el cuerpo se crea una forma interna.
-    FixtureDef fixtureDef = FixtureDef(shape);
-    cuerpo.createFixture(fixtureDef);
-    return cuerpo;
-  }
-
-}
 
 class EmberPlayer extends SpriteAnimationComponent with HasGameRef<UghGame>, KeyboardHandler, CollisionCallbacks {
 
@@ -72,11 +25,9 @@ class EmberPlayer extends SpriteAnimationComponent with HasGameRef<UghGame>, Key
     //Posicion redimensionada a 32. Original : 64. Necesidad de redimensionar mapa.
   }) : super(anchor: Anchor.center);
 
-  int horizontalDirection = 0;
-  int verticalDirection = 0;
 
-  final Vector2 velocity = Vector2.zero();
-  final double moveSpeed = 200;
+
+
 
   bool hitByEnemy = false;
 
@@ -99,39 +50,6 @@ class EmberPlayer extends SpriteAnimationComponent with HasGameRef<UghGame>, Key
       //podriamos guardarlo como variable. Antiguo cuerpo, ahora esta el BOdy,
       CircleHitbox(),
     );*/
-  }
-
-  //deteccion de las teclas del teclado y movimiento
-  @override
-  bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    //print("DEBUG: ---------------------->BOTON" + keysPressed.toString());
-    horizontalDirection = 0;
-    verticalDirection=0;
-
-    //nomencatura ternaria de una if else.
-    //posicion horizontal
-    horizontalDirection += (keysPressed.contains(LogicalKeyboardKey.keyA) ||
-        keysPressed.contains(LogicalKeyboardKey.arrowLeft))
-        ? -1
-        : 0;
-    horizontalDirection += (keysPressed.contains(LogicalKeyboardKey.keyD) ||
-        keysPressed.contains(LogicalKeyboardKey.arrowRight))
-        ? 1
-        : 0;
-
-    //posicion vertical
-    verticalDirection += (keysPressed.contains(LogicalKeyboardKey.keyW) ||
-        keysPressed.contains(LogicalKeyboardKey.arrowUp))
-        ? -1
-        : 0;
-    verticalDirection += (keysPressed.contains(LogicalKeyboardKey.keyS) ||
-        keysPressed.contains(LogicalKeyboardKey.arrowDown))
-        ? 1
-        : 0;
-
-    game.setDirection(horizontalDirection, verticalDirection);
-
-    return true;
   }
 
   //colisiones
@@ -169,27 +87,5 @@ class EmberPlayer extends SpriteAnimationComponent with HasGameRef<UghGame>, Key
     );
   }
 
-  @override
-  void update(double dt) {
-    // TODO: implement updateTree
-    //position.add(Vector2(10.0 * horizontalDirection, 10.0 * verticalDirection));
-    //velocity.x = horizontalDirection * moveSpeed;
-    //velocity.y = verticalDirection * moveSpeed;
-    //game.tiledComponent.position -= velocity * dt;
-
-    //movimiento de flip-flop
-    if (horizontalDirection < 0 && scale.x > 0) {
-      flipHorizontally();
-    } else if (horizontalDirection > 0 && scale.x < 0) {
-      flipHorizontally();
-    }
-
-    if (position.x < -size.x || game.health <= 0) {
-      game.setDirection(0, 0);
-      removeFromParent();
-    }
-
-    super.update(dt);
-  }
 
 }
