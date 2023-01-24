@@ -57,16 +57,7 @@
    </object>
   </objectgroup>
   <objectgroup id="4" name="water">
-   <object id="8" x="269.474" y="365.451">
-    <point/>
-   </object>
    <object id="9" x="592.473" y="489.113">
-    <point/>
-   </object>
-   <object id="10" x="714.29" y="490.959">
-    <point/>
-   </object>
-   <object id="11" x="878.558" y="149.503">
     <point/>
    </object>
   </objectgroup>

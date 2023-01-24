@@ -8,8 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:forge2d/src/dynamics/body.dart';
 import 'package:juego/bodies/coin_body.dart';
 import 'package:juego/players/water_player.dart';
-
-import '../element/star_element.dart';
 import '../game/ugh_game.dart';
 //Creamos una clase player que extiende del Sprite.
 //El Sprite es componente visual que tendra una animación de sprite
@@ -26,7 +24,7 @@ class EmberPlayer extends SpriteAnimationComponent with HasGameRef<UghGame>, Key
     //Posicion redimensionada a 32. Original : 64. Necesidad de redimensionar mapa.
   }) : super(anchor: Anchor.center);
 
-  //bool hitByEnemy = false;
+  bool hitByEnemy = false;
 
   @override
   Future<void> onLoad() async {
@@ -40,6 +38,23 @@ class EmberPlayer extends SpriteAnimationComponent with HasGameRef<UghGame>, Key
         textureSize: Vector2.all(16), //16 es el valor del ancho y alto ¿?
         stepTime: 0.12, //velocidad a la que cambia la animación a través de los 4 estados
       ),
+    );
+  }
+
+  void hit() {
+    if (!hitByEnemy) {
+      hitByEnemy = true;
+    }
+    add(
+      OpacityEffect.fadeOut(
+        EffectController(
+          alternate: true,
+          duration: 0.1,
+          repeatCount: 6,
+        ),
+      )..onComplete = () {
+        hitByEnemy = false;
+      },
     );
   }
 }

@@ -8,6 +8,7 @@ import 'package:flame/sprite.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:juego/bodies/coin_body.dart';
 import 'package:juego/bodies/suelo_body.dart';
+import 'package:juego/bodies/water_body.dart';
 import 'package:juego/overlays/hud.dart';
 import 'package:juego/players/ember_player.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +35,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, ContactCall
 
   late EmberBody _emberBody;
   late CoinBody _coinBody;
-
-  List <PositionComponent> objetosVisuales = [];
+  late WaterBody _waterBody;
 
   UghGame():super(gravity: Vector2(0, 9.8), zoom: 1);
 
@@ -126,8 +126,6 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, ContactCall
 
   Future<void> initializeGame(bool loadHud) async {
 
-    //limpio el array de los objetos visuales viejos.
-    objetosVisuales.clear();
     //posicionamos el mapa de nuevo.
     tiledComponent.position = Vector2(0,0);
 
@@ -142,27 +140,15 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, ContactCall
       add(SueloBody(tiledObject: plataformas));
     }
 
-    //añadimos los componenetes water al array y al juego.
-    for (final water in water!.objects) {
-      WaterPlayer waterPlayer = WaterPlayer(position: Vector2(water.x, water.y));
-      objetosVisuales.add(waterPlayer);
-      add(waterPlayer);
-    }
-
-    //añado los componenete estrella al array y al juego.
-    /*for (final stars in stars!.objects) {
-      StarElement starElement = StarElement(position: Vector2(stars.x, stars.y));
-      objetosVisuales.add(starElement);
-      add(starElement);
-    }*/
 
     //añado monedas.
     for (final coin in coin!.objects) {
       _coinBody = CoinBody(position: Vector2(coin.x, coin.y));
-      //objetosVisuales.add(coinBody);
       add(_coinBody);
     }
 
+    _waterBody = WaterBody(position: Vector2(water!.objects.first.x, posinitplayer!.objects.first.y));
+    add(_waterBody);
 
     _emberBody = EmberBody(position: Vector2(posinitplayer!.objects.first.x,posinitplayer!.objects.first.y));
     add(_emberBody);

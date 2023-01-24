@@ -5,6 +5,7 @@ import 'package:flame_forge2d/body_component.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:juego/bodies/water_body.dart';
 
 import '../game/ugh_game.dart';
 import '../players/ember_player.dart';
@@ -36,7 +37,7 @@ class EmberBody extends BodyComponent<UghGame> with KeyboardHandler, ContactCall
     emberPlayer = EmberPlayer(position: Vector2.zero(), size: Vector2(32, 32));
     //emberPlayer.size = size;
     add(emberPlayer); //cuando activo esto, el juego no se inicia.
-    renderBody = true;
+    renderBody = false;
   }
 
   @override
@@ -93,8 +94,12 @@ class EmberBody extends BodyComponent<UghGame> with KeyboardHandler, ContactCall
   //colisiones
   @override
   void beginContact(Object other, Contact contact) {
-    if ( other is CoinBody) {
+    if (other is CoinBody) {
       other.removeFromParent();
+    }
+
+    if (other is WaterBody){
+      emberPlayer.hit();
     }
   }
 
@@ -106,22 +111,18 @@ class EmberBody extends BodyComponent<UghGame> with KeyboardHandler, ContactCall
 
     //nomencatura ternaria de una if else.
     //posicion horizontal
-    horizontalDirection += (keysPressed.contains(LogicalKeyboardKey.keyA) ||
-        keysPressed.contains(LogicalKeyboardKey.arrowLeft))
+    horizontalDirection += (keysPressed.contains(LogicalKeyboardKey.arrowLeft))
         ? -1
         : 0;
-    horizontalDirection += (keysPressed.contains(LogicalKeyboardKey.keyD) ||
-        keysPressed.contains(LogicalKeyboardKey.arrowRight))
+    horizontalDirection += (keysPressed.contains(LogicalKeyboardKey.arrowRight))
         ? 1
         : 0;
 
     //posicion vertical
-    verticalDirection += (keysPressed.contains(LogicalKeyboardKey.keyW) ||
-        keysPressed.contains(LogicalKeyboardKey.arrowUp))
+    verticalDirection += (keysPressed.contains(LogicalKeyboardKey.arrowUp))
         ? -1
         : 0;
-    verticalDirection += (keysPressed.contains(LogicalKeyboardKey.keyS) ||
-        keysPressed.contains(LogicalKeyboardKey.arrowDown))
+    verticalDirection += (keysPressed.contains(LogicalKeyboardKey.arrowDown))
         ? 1
         : 0;
 
