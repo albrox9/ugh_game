@@ -4,6 +4,7 @@ import 'package:flame_forge2d/body_component.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/services.dart';
 import 'package:forge2d/src/dynamics/body.dart';
+import 'package:juego/bodies/ember_body.dart';
 import 'package:juego/game/ugh_game.dart';
 
 import '../players/water_player.dart';
@@ -70,6 +71,13 @@ class WaterBody extends BodyComponent<UghGame> with KeyboardHandler, ContactCall
     final shape = CircleShape()..radius = 16.0;
     final fixtureDef = FixtureDef(shape);
     return world.createBody(bodyDef)..createFixture(fixtureDef);
+  }
+
+  void beginContact(Object other, Contact contact) {
+
+    if (other is EmberBody){
+      waterPlayer.hit();
+    }
   }
 
   @override

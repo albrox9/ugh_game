@@ -8,6 +8,9 @@ class WaterPlayer extends SpriteAnimationComponent with HasGameRef<UghGame> {
 
   WaterPlayer({required super.position}) : super(size: Vector2.all(32), anchor: Anchor.center);
 
+  bool hitByEnemy = false;
+
+
   @override
   Future<void> onLoad() async {
     animation = SpriteAnimation.fromFrameData(
@@ -22,14 +25,21 @@ class WaterPlayer extends SpriteAnimationComponent with HasGameRef<UghGame> {
 
   }
 
-  @override
-  void update(double dt) {
-    // TODO: implement update
-    if (game.health <= 0) {
-      removeFromParent();
+  void hit() {
+    if (!hitByEnemy) {
+      hitByEnemy = true;
     }
-    super.update(dt);
+    add(
+      OpacityEffect.fadeOut(
+        EffectController(
+          alternate: true,
+          duration: 0.1,
+          repeatCount: 6,
+        ),
+      )..onComplete = () {
+        hitByEnemy = false;
+      },
+    );
   }
-
 
 }

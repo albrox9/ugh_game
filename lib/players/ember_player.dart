@@ -43,6 +43,7 @@ class EmberPlayer extends SpriteAnimationComponent with HasGameRef<UghGame>, Key
 
   void hit() {
     if (!hitByEnemy) {
+      game.health--;
       hitByEnemy = true;
     }
     add(
