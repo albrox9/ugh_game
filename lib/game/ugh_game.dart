@@ -49,9 +49,9 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, ContactCall
       'ember.png',
       'ground.png',
       'coin.png',
+      'coinOnly.png',
       'heart_half.png',
       'heart.png',
-      'star.png',
       'fondo.png',
       'water_enemy.png',
 
