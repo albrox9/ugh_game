@@ -35,7 +35,7 @@ class Hud extends PositionComponent with HasGameRef<UghGame> {
     );
     add(_scoreTextComponent);
 
-    final starSprite = await game.loadSprite('star.png');
+    final starSprite = await game.loadSprite('coin.png');
     add(
       SpriteComponent(
         sprite: starSprite,
