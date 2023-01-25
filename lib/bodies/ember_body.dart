@@ -95,6 +95,7 @@ class EmberBody extends BodyComponent<UghGame> with KeyboardHandler, ContactCall
   @override
   void beginContact(Object other, Contact contact) {
     if (other is CoinBody) {
+      game.coinCollected++;
       other.removeFromParent();
     }
 

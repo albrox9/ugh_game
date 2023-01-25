@@ -30,7 +30,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, ContactCall
   final double moveSpeed = 200;
 
   //variables para la vida, usadas en el heart_health
-  int starsCollected = 0;
+  int coinCollected = 0;
   int health = 3;
 
   late EmberBody _emberBody;
@@ -161,7 +161,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, ContactCall
   }
 
   void reset() {
-    starsCollected = 0;
+    coinCollected = 0;
     health = 3;
     initializeGame(false);
   }
