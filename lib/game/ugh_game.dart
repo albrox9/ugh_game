@@ -58,10 +58,9 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, ContactCall
     ]);
 
 
-    /*ParallaxComponent background = await ParallaxComponent.load([
-      ParallaxImageData('clouds.png'),
-      ParallaxImageData('mountain_depth_z_1.png'),
-      ParallaxImageData('mountain_depth_z_2.png'),
+    ParallaxComponent background = await ParallaxComponent.load([
+      ParallaxImageData('fondo.png'),
+
     ],
 
         baseVelocity: Vector2(20, 0),
@@ -69,16 +68,16 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, ContactCall
 
     );
 
-    add(background);*/
+    add(background);
 
 
-    SpriteComponent image = SpriteComponent()
+    /*SpriteComponent image = SpriteComponent()
     ..sprite = await loadSprite('fondo.png')
     ..size = worldToScreen(Vector2(canvasSize.x, canvasSize.y));
 
 
 
-    add(image);
+    add(image);*/
 
     //Posicion redimensionada a 32. Original : 64. Necesidad de redimensionar mapa. No cabia en pantalla.
     tiledComponent = await TiledComponent.load('tile-32.tmx', Vector2.all(32));
